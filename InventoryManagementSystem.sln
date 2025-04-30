@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7BF5A2ED-88C1-4B98-B60E-46BB6294C48D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7F17EBFD-3CED-434C-9387-84F6C3A8B26E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.Api", "src\InventoryManagementSystem.Api\InventoryManagementSystem.Api.csproj", "{847940B0-E970-4205-9D82-66D2E453A26A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.Application", "src\InventoryManagementSystem.Application\InventoryManagementSystem.Application.csproj", "{572060B8-9E0F-4A38-85A2-B0743981C2D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.Domain", "src\InventoryManagementSystem.Domain\InventoryManagementSystem.Domain.csproj", "{0210F8DC-8B6F-4116-9052-75817C084617}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.Infrastructure", "src\InventoryManagementSystem.Infrastructure\InventoryManagementSystem.Infrastructure.csproj", "{B84EE2D1-5FD9-4898-BA02-54071822083E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.UnitTests", "tests\UnitTests\InventoryManagementSystem.UnitTests.csproj", "{801A416E-5F82-43F1-9C81-F1A1C1C0119E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.IntegrationTests", "tests\IntegrationTests\InventoryManagementSystem.IntegrationTests.csproj", "{9B4218B1-BA05-4187-B3FB-623BDB923C14}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C03AED90-E9C5-48FC-BE2B-185D703D126E}"
+	ProjectSection(SolutionItems) = preProject
+		Directiory.Build.props = Directiory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{05A19368-CB16-4E1B-A1A1-5A6B299F974B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1AEF93CF-BC9F-4687-B338-4CF623E3A6B5}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\Build.yml = .github\workflows\Build.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{847940B0-E970-4205-9D82-66D2E453A26A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{847940B0-E970-4205-9D82-66D2E453A26A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{847940B0-E970-4205-9D82-66D2E453A26A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{847940B0-E970-4205-9D82-66D2E453A26A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{572060B8-9E0F-4A38-85A2-B0743981C2D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{572060B8-9E0F-4A38-85A2-B0743981C2D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{572060B8-9E0F-4A38-85A2-B0743981C2D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{572060B8-9E0F-4A38-85A2-B0743981C2D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0210F8DC-8B6F-4116-9052-75817C084617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0210F8DC-8B6F-4116-9052-75817C084617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0210F8DC-8B6F-4116-9052-75817C084617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0210F8DC-8B6F-4116-9052-75817C084617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B84EE2D1-5FD9-4898-BA02-54071822083E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B84EE2D1-5FD9-4898-BA02-54071822083E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B84EE2D1-5FD9-4898-BA02-54071822083E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B84EE2D1-5FD9-4898-BA02-54071822083E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{801A416E-5F82-43F1-9C81-F1A1C1C0119E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{801A416E-5F82-43F1-9C81-F1A1C1C0119E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{801A416E-5F82-43F1-9C81-F1A1C1C0119E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{801A416E-5F82-43F1-9C81-F1A1C1C0119E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B4218B1-BA05-4187-B3FB-623BDB923C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B4218B1-BA05-4187-B3FB-623BDB923C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B4218B1-BA05-4187-B3FB-623BDB923C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B4218B1-BA05-4187-B3FB-623BDB923C14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{847940B0-E970-4205-9D82-66D2E453A26A} = {7BF5A2ED-88C1-4B98-B60E-46BB6294C48D}
+		{572060B8-9E0F-4A38-85A2-B0743981C2D0} = {7BF5A2ED-88C1-4B98-B60E-46BB6294C48D}
+		{0210F8DC-8B6F-4116-9052-75817C084617} = {7BF5A2ED-88C1-4B98-B60E-46BB6294C48D}
+		{B84EE2D1-5FD9-4898-BA02-54071822083E} = {7BF5A2ED-88C1-4B98-B60E-46BB6294C48D}
+		{801A416E-5F82-43F1-9C81-F1A1C1C0119E} = {7F17EBFD-3CED-434C-9387-84F6C3A8B26E}
+		{9B4218B1-BA05-4187-B3FB-623BDB923C14} = {7F17EBFD-3CED-434C-9387-84F6C3A8B26E}
+		{05A19368-CB16-4E1B-A1A1-5A6B299F974B} = {C03AED90-E9C5-48FC-BE2B-185D703D126E}
+		{1AEF93CF-BC9F-4687-B338-4CF623E3A6B5} = {05A19368-CB16-4E1B-A1A1-5A6B299F974B}
+	EndGlobalSection
+EndGlobal

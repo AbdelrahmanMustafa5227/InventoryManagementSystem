@@ -1,0 +1,42 @@
+name: Build and deploy ASP.Net Core app to an Azure Web App
+
+env:
+  AZURE_WEBAPP_NAME: InventoryManagementSystem    # set this to the name of your Azure Web App
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  DOTNET_VERSION: '9'                 # set this to the .NET Core version to use
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    name: "CI"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+        
+      - name: Format code
+        run: dotnet format -v detailed
+        
+      - name: Running Tests
+        run: dotnet test --configuration Release --no-build
+
+      - name: Publish
+        run: dotnet publish src/InventoryManagementSystem.Api/InventoryManagementSystem.Api.csproj --configuration Release -o artifacts
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          path: artifacts/
