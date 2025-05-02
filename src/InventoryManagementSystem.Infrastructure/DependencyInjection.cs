@@ -44,6 +44,7 @@ namespace InventoryManagementSystem.Infrastructure
                 .ValidateDataAnnotations();
             services.ConfigureOptions<JwtOptionsSetup>();
             services.Configure<EmailOptions>(configuration.GetSection(EmailOptions.SectionName));
+            services.Configure<PaginationOptions>(configuration.GetSection(PaginationOptions.SectionName));
 
             // Background Jobs
             services.RegisterHangfireJobs(configuration);
@@ -51,7 +52,6 @@ namespace InventoryManagementSystem.Infrastructure
             // Other Services
             services.AddMemoryCache();
             services.AddScoped<IdempotencyService>();
-            services.Configure<PaginationOptions>(configuration.GetSection(PaginationOptions.SectionName));
             services.AddSingleton<ICachingService, CachingService>();
             services.AddSingleton<IEmailService, EmailService>();
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
