@@ -37,7 +37,10 @@ namespace InventoryManagementSystem.Application.Behaviors
 
             if (validationErrors.Any())
             {
-                _logger.LogError("Validation Error Has Occurred on Request {0}", request.GetType().Name);
+                _logger.LogError("{0} Validation {1} Has Occurred on Request {2}\n",
+                    validationErrors.Count,
+                    validationErrors.Count == 1 ? "Error" : "Errors",
+                    request.GetType().Name);
                 throw new ValidationFailureException(validationFailures: validationErrors);
             }
 

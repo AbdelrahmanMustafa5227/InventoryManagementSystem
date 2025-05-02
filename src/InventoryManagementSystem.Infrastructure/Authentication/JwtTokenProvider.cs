@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.Infrastructure.Authentication
 {
-    internal class JwtTokenProvider : IJwtTokenProvider
+    public class JwtTokenProvider : IJwtTokenProvider
     {
         private readonly JwtOptions _options;
         private readonly AppDbContext _dbContext;

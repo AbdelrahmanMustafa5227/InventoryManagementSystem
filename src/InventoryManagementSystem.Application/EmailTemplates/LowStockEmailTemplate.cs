@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.Application.EmailTemplates
 {
+    [ExcludeFromCodeCoverage]
     public class LowStockEmailTemplate
     {
         public static string Get(List<string> lowStockAlerts)

@@ -4,10 +4,12 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace InventoryManagementSystem.Api.Controllers
 {
     [Route("reports")]
+    [EnableRateLimiting("fixed")]
     [ApiController]
     public class ReportsController : ApiController
     {

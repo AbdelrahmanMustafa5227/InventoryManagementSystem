@@ -1,4 +1,5 @@
-﻿using InventoryManagementSystem.Application.Abstractions.Services;
+﻿using InventoryManagementSystem.Application.Abstractions.Logging;
+using InventoryManagementSystem.Application.Abstractions.Services;
 using InventoryManagementSystem.Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -15,25 +16,31 @@ namespace InventoryManagementSystem.Application.Features.Users.Commands
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IAppLogger<RegisterCommandHandler> _logger;
         private readonly IUnitOfWork _unitOfWork;
 
-        public RegisterCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IUnitOfWork unitOfWork)
+        public RegisterCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IUnitOfWork unitOfWork, IAppLogger<RegisterCommandHandler> logger)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<Result> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             if (await _userRepository.Exist(request.Username, request.Email))
+            {
+                _logger.LogWarning("Registeration Attempt Failed because Email/Username already exists");
                 return Result.Failure(Error.Conflict);
+            }
 
             var user = request.ToModel();
             user.Password = _passwordHasher.Hash(request.Password);
 
             _userRepository.Register(user);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation("User {0} registered successfully", request.Username);
             return Result.Success();
         }
 

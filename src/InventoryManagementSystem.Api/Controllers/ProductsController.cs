@@ -24,7 +24,8 @@ namespace InventoryManagementSystem.Api.Controllers
         public async Task<IActionResult> AddProduct([FromBody] AddProductCommand command)
         {
             var result = await Sender.Send(command);
-            return result.IsSuccess ? Created() : ToProblemDetails(result.Error!);
+            return result.IsSuccess ? CreatedAtAction(nameof(GetProductDetails), new { Id = result.Value.Id }, result.Value)
+                : ToProblemDetails(result.Error!);
         }
 
         [Authorize(Roles = "Admin")]
@@ -52,7 +53,7 @@ namespace InventoryManagementSystem.Api.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAllProducts([FromQuery]int page)
+        public async Task<IActionResult> GetAllProducts([FromQuery] int page)
         {
             var query = new GetAllProductsQuery(page);
             var result = await Sender.Send(query);

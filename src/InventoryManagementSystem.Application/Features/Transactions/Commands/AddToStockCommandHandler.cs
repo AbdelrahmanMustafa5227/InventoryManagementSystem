@@ -1,4 +1,5 @@
-﻿using InventoryManagementSystem.Application.Abstractions.Services;
+﻿using InventoryManagementSystem.Application.Abstractions.Logging;
+using InventoryManagementSystem.Application.Abstractions.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,11 @@ namespace InventoryManagementSystem.Application.Features.Transactions.Commands
         private readonly IProductRepository _productRepository;
         private readonly IWarehouseRepository _warehouseRepository;
         private readonly IProductWarehouseRepository _productWarehouseRepository;
+        private readonly IAppLogger<AddToStockCommandHandler> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserContext _userContext;
 
-        public AddToStockCommandHandler(ITransactionRepository transactionRepository, IProductRepository productRepository, IWarehouseRepository warehouseRepository, IUnitOfWork unitOfWork, IProductWarehouseRepository productWarehouseRepository, IUserContext userContext)
+        public AddToStockCommandHandler(ITransactionRepository transactionRepository, IProductRepository productRepository, IWarehouseRepository warehouseRepository, IUnitOfWork unitOfWork, IProductWarehouseRepository productWarehouseRepository, IUserContext userContext, IAppLogger<AddToStockCommandHandler> logger)
         {
             _transactionRepository = transactionRepository;
             _productRepository = productRepository;
@@ -26,6 +28,7 @@ namespace InventoryManagementSystem.Application.Features.Transactions.Commands
             _unitOfWork = unitOfWork;
             _productWarehouseRepository = productWarehouseRepository;
             _userContext = userContext;
+            _logger = logger;
         }
 
         public async Task<Result> Handle(AddToStockCommand request, CancellationToken cancellationToken)
@@ -35,12 +38,16 @@ namespace InventoryManagementSystem.Application.Features.Transactions.Commands
                 return Result.Failure(Error.NotFound);
 
             var transaction = request.ToModel();
-            transaction.UserId = _userContext.GetLoggedUserId;
+            // There's No way for user Id to be 0 unless we are testing , we set it to -1 (the Id of the test user)
+            transaction.UserId = _userContext.GetLoggedUserId == 0 ? -1 : _userContext.GetLoggedUserId;
             _transactionRepository.Add(transaction);
             await _productWarehouseRepository.AddToStock(request.ProductId, request.WarehouseId, request.Quantity);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            _logger.LogInformation("User {UserId} added {Quantity} units of product {ProductId} to warehouse {WarehouseId}", _userContext.GetLoggedUserEmail, request.Quantity, request.ProductId, request.WarehouseId);
             return Result.Success();
         }
+
     }
 
     public class AddToStockCommandValidator : AbstractValidator<AddToStockCommand>

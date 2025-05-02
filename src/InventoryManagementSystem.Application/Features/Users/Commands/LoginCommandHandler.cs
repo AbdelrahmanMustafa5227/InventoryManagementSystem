@@ -1,4 +1,5 @@
 ﻿using InventoryManagementSystem.Application.Abstractions.Authentication;
+using InventoryManagementSystem.Application.Abstractions.Logging;
 using InventoryManagementSystem.Application.Abstractions.Services;
 using System;
 using System.Collections.Generic;
@@ -15,25 +16,27 @@ namespace InventoryManagementSystem.Application.Features.Users.Commands
         private readonly IJwtTokenProvider _jwtTokenProvider;
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAppLogger<LoginCommandHandler> _logger;
 
-        public LoginCommandHandler(IJwtTokenProvider jwtTokenProvider, IUserRepository userRepository, IPasswordHasher passwordHasher, IUnitOfWork unitOfWork)
+        public LoginCommandHandler(IJwtTokenProvider jwtTokenProvider, IUserRepository userRepository, IPasswordHasher passwordHasher, IAppLogger<LoginCommandHandler> logger)
         {
             _jwtTokenProvider = jwtTokenProvider;
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
-            _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<Result<JwtToken>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByEmailAsync(request.Email);
-            if (user == null)
-                return Result.Failure<JwtToken>(Error.UnAuthorized);
 
-            if (!_passwordHasher.Verify(request.Password, user.Password))
+            if (user == null || !_passwordHasher.Verify(request.Password, user.Password))
+            {
+                _logger.LogWarning("Login failed for user {0}", request.Email);
                 return Result.Failure<JwtToken>(Error.UnAuthorized);
+            }
 
+            _logger.LogInformation("User {0} logged in successfully", request.Email);
             return _jwtTokenProvider.GenerateJwtToken(user);
         }
 

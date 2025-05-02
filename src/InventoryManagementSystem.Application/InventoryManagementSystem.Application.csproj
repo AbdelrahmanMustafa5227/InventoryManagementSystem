@@ -25,4 +25,9 @@
     <Folder Include="Features\Transactions\Queries\" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="InventoryManagementSystem.UnitTests" />
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+	</ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
-﻿using InventoryManagementSystem.Application.Mappings;
+﻿using InventoryManagementSystem.Application.Abstractions.Logging;
+using InventoryManagementSystem.Application.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,14 @@ namespace InventoryManagementSystem.Application.Features.Products.Commands
     public class AddProductCommandHandler : IRequestHandler<AddProductCommand,Result<AddProductResponse>>
     {
         private readonly IProductRepository _productRepository;
+        private readonly IAppLogger<AddProductCommandHandler> _logger;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AddProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork)
+        public AddProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork, IAppLogger<AddProductCommandHandler> logger)
         {
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<Result<AddProductResponse>> Handle(AddProductCommand request, CancellationToken cancellationToken)
@@ -27,6 +30,7 @@ namespace InventoryManagementSystem.Application.Features.Products.Commands
             Product product = request.ToModel();
             _productRepository.Add(product);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation("Product with Id {ProductId} Has Successfully been created", product.Id);
             return product.ToResponse();
         }
     }

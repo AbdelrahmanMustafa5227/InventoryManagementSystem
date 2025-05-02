@@ -1,6 +1,7 @@
 ﻿using Hangfire;
 using InventoryManagementSystem.Application.Abstractions.Repositories;
 using InventoryManagementSystem.Infrastructure.Persistence.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using Org.BouncyCastle.Crypto.Agreement;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,23 @@ using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.Infrastructure.BackgroundJobs
 {
-    public class ArchiveOldTransactionsJob
+    public class ArchiveOldTransactionsJob : IJob
     {
-        private readonly ITransactionRepository _transactionRepository;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public ArchiveOldTransactionsJob(ITransactionRepository transactionRepository)
+        public ArchiveOldTransactionsJob(IServiceScopeFactory serviceScopeFactory)
         {
-            _transactionRepository = transactionRepository;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
-        public void Execute()
+        public async Task Execute()
         {
-            _transactionRepository.ArchiveTransactionsOlderThan1Year(); 
+            using(var scope = _serviceScopeFactory.CreateScope())
+            {
+                var transactionRepository = scope.ServiceProvider.GetRequiredService<ITransactionRepository>();
+                transactionRepository.ArchiveTransactionsOlderThan1Year();
+            }
+            await Task.CompletedTask;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.Application.Helpers.Pagination
 {
-    public class Paginated<T> where T : class
+    public class Paginated<T> : IEnumerable<T> where T : class
     {
         private readonly int PageSize = 2;
 
@@ -36,5 +37,10 @@ namespace InventoryManagementSystem.Application.Helpers.Pagination
         }
 
         public static Paginated<T> CreateEmpty() => new Paginated<T>([], 1, 0);
+
+        public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
     }
 }

@@ -1,4 +1,6 @@
-﻿using InventoryManagementSystem.Application.Helpers.Pagination;
+﻿using InventoryManagementSystem.Application.Abstractions.Logging;
+using InventoryManagementSystem.Application.Abstractions.Services;
+using InventoryManagementSystem.Application.Helpers.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +16,16 @@ namespace InventoryManagementSystem.Application.Features.Reports.Queries
     internal class GetLowStockReportQueryHandler : IRequestHandler<GetLowStockReportQuery, Result<Paginated<WarehouseDto>>>
     {
         private readonly IWarehouseRepository _warehouseRepository;
+        private readonly IAppLogger<GetLowStockReportQueryHandler> _logger;
+        private readonly IUserContext _userContext;
 
-        public GetLowStockReportQueryHandler(IUnitOfWork unitOfWork, IWarehouseRepository warehouseRepository)
+        public GetLowStockReportQueryHandler(IWarehouseRepository warehouseRepository, IAppLogger<GetLowStockReportQueryHandler> logger, IUserContext userContext)
         {
             _warehouseRepository = warehouseRepository;
+            _logger = logger;
+            _userContext = userContext;
         }
+
         public async Task<Result<Paginated<WarehouseDto>>> Handle(GetLowStockReportQuery request, CancellationToken cancellationToken)
         {
             var queryResult = await _warehouseRepository.GetWarehousesWithLowStockProducts(request.page);
@@ -30,7 +37,18 @@ namespace InventoryManagementSystem.Application.Features.Reports.Queries
                     ))
                 .ToList();
 
+            _logger.LogInformation("{0} has generated Low stock report successfully.", _userContext.GetLoggedUserEmail);
             return Paginated<WarehouseDto>.Create(lowStockWarehouses, request.page, queryResult.TotalRecords);
+        }
+
+        public class GetLowStockReportQueryValidator : AbstractValidator<GetLowStockReportQuery>
+        {
+            public GetLowStockReportQueryValidator()
+            {
+                RuleFor(x => x.page)
+                    .GreaterThan(0)
+                    .WithMessage("Page number must be greater than 0.");
+            }
         }
     }
 }

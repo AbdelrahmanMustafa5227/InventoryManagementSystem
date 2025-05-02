@@ -348,6 +348,14 @@ namespace InventoryManagementSystem.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+                            Id = -1L,
+                            Email = "test@test.com",
+                            Password = "337A417D952CD843494214D04A78E4A40513096791169E79CA4321B743D974F4-BCFAC803603D1EDDB7E50AC1079E4288",
+                            Role = 1,
+                            Username = "TestUser"
+                        },
+                        new
+                        {
                             Id = 1L,
                             Email = "email1@gmail.com",
                             Password = "Admin123$",

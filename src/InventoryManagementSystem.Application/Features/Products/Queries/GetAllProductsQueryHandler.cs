@@ -19,6 +19,7 @@ namespace InventoryManagementSystem.Application.Features.Products.Queries
     internal class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, Result<Paginated<GetAllProductsResponse>>>
     {
         private readonly IProductRepository _productRepository;
+
         public GetAllProductsQueryHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
@@ -26,7 +27,21 @@ namespace InventoryManagementSystem.Application.Features.Products.Queries
         public async Task<Result<Paginated<GetAllProductsResponse>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
             var queryResult = await _productRepository.GetAllAsync(request.PageNumber);
-            return Paginated<GetAllProductsResponse>.Create(queryResult.Items.ToResponse(), request.PageNumber , queryResult.TotalRecords);
+
+            return Paginated<GetAllProductsResponse>.Create(
+                queryResult.Items.ToResponse(),
+                request.PageNumber , queryResult.TotalRecords
+                );
+        }
+
+        public class GetAllProductsValidator : AbstractValidator<GetAllProductsQuery>
+        {
+            public GetAllProductsValidator()
+            {
+                RuleFor(x => x.PageNumber)
+                    .GreaterThan(0)
+                    .WithMessage("Page number must be greater than 0.");
+            }
         }
     }
 

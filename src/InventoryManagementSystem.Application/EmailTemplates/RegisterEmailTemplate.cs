@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.Application.EmailTemplates
 {
+    [ExcludeFromCodeCoverage]
     public static class RegisterEmailTemplate
     {
         public static string Get(string userName)

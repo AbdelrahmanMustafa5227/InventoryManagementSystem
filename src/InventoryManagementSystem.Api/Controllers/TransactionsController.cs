@@ -20,7 +20,6 @@ namespace InventoryManagementSystem.Api.Controllers
             _sender = sender;
         }
 
-
         [Authorize]
         [ServiceFilter<IdempotencyFilter>]
         [HttpPost("addToStock")]
@@ -47,5 +46,7 @@ namespace InventoryManagementSystem.Api.Controllers
             var result = await _sender.Send(command);
             return result.IsSuccess ? NoContent() : ToProblemDetails(result.Error!);
         }
+
+        
     }
 }

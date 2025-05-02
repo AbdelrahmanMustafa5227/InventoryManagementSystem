@@ -33,6 +33,7 @@ namespace InventoryManagementSystem.Infrastructure.Persistence.Extensions
                 );
 
             modelBuilder.Entity<User>().HasData(
+                new User { Id = -1, Username = "TestUser", Email = "test@test.com", Password = "337A417D952CD843494214D04A78E4A40513096791169E79CA4321B743D974F4-BCFAC803603D1EDDB7E50AC1079E4288", Role = Role.Admin },
                 new User { Id = 1, Username = "Admin1", Email = "email1@gmail.com", Password = "Admin123$", Role = Role.Admin },
                 new User { Id = 2, Username = "User1", Email = "email2@gmail.com", Password = "User123$", Role = Role.User }
                 );

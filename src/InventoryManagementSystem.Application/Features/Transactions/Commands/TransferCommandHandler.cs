@@ -1,9 +1,11 @@
-﻿using InventoryManagementSystem.Application.Abstractions.Services;
+﻿using InventoryManagementSystem.Application.Abstractions.Logging;
+using InventoryManagementSystem.Application.Abstractions.Services;
 using InventoryManagementSystem.Application.EmailTemplates;
 using InventoryManagementSystem.Application.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,11 +20,11 @@ namespace InventoryManagementSystem.Application.Features.Transactions.Commands
         private readonly IWarehouseRepository _warehouseRepository;
         private readonly IProductWarehouseRepository _productWarehouseRepository;
         private readonly IUserContext _userContext;
-        private readonly IEmailService _emailService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPublisher _publisher;
+        private readonly IAppLogger<TransferCommandHandler> _logger;
 
-        public TransferCommandHandler(ITransactionRepository transactionRepository, IProductRepository productRepository, IWarehouseRepository warehouseRepository, IUnitOfWork unitOfWork, IProductWarehouseRepository productWarehouseRepository, IUserContext userContext, IEmailService emailService, IPublisher publisher)
+        public TransferCommandHandler(ITransactionRepository transactionRepository, IProductRepository productRepository, IWarehouseRepository warehouseRepository, IUnitOfWork unitOfWork, IProductWarehouseRepository productWarehouseRepository, IUserContext userContext, IPublisher publisher, IAppLogger<TransferCommandHandler> logger)
         {
             _transactionRepository = transactionRepository;
             _productRepository = productRepository;
@@ -30,8 +32,8 @@ namespace InventoryManagementSystem.Application.Features.Transactions.Commands
             _unitOfWork = unitOfWork;
             _productWarehouseRepository = productWarehouseRepository;
             _userContext = userContext;
-            _emailService = emailService;
             _publisher = publisher;
+            _logger = logger;
         }
 
         public async Task<Result> Handle(TransferCommand request, CancellationToken cancellationToken)
@@ -57,6 +59,7 @@ namespace InventoryManagementSystem.Application.Features.Transactions.Commands
             if (productWarehouse.Product.LowStockThreshold >= productWarehouse.Quantity)
                 await _publisher.Publish(new LowStockEvent(productWarehouse.Product.Name, productWarehouse.Warehouse.Name));
 
+            _logger.LogInformation("User {UserId} transferred {Quantity} units of product {ProductId} from warehouse {SourceWarehouseId} to warehouse {DestinationWarehouseId}", _userContext.GetLoggedUserEmail, request.Quantity, request.ProductId, request.SourceWarehouseId, request.DestinationWarehouseId);
             return Result.Success();
         }
     }

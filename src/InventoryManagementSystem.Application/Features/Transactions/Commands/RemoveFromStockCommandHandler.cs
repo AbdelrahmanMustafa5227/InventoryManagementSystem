@@ -1,4 +1,5 @@
-﻿using InventoryManagementSystem.Application.Abstractions.Services;
+﻿using InventoryManagementSystem.Application.Abstractions.Logging;
+using InventoryManagementSystem.Application.Abstractions.Services;
 using InventoryManagementSystem.Application.EmailTemplates;
 using InventoryManagementSystem.Application.Events;
 using System;
@@ -16,22 +17,22 @@ namespace InventoryManagementSystem.Application.Features.Transactions.Commands
         private readonly ITransactionRepository _transactionRepository;
         private readonly IProductRepository _productRepository;
         private readonly IWarehouseRepository _warehouseRepository;
-        private readonly IUserRepository _userRepository;
         private readonly IProductWarehouseRepository _productWarehouseRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserContext _userContext;
         private readonly IPublisher _publisher;
+        private readonly IAppLogger<RemoveFromStockCommandHandler> _logger;
 
-        public RemoveFromStockCommandHandler(ITransactionRepository transactionRepository, IProductRepository productRepository, IWarehouseRepository warehouseRepository, IUserRepository userRepository, IUnitOfWork unitOfWork, IProductWarehouseRepository productWarehouseRepository, IPublisher publisher, IUserContext userContext)
+        public RemoveFromStockCommandHandler(ITransactionRepository transactionRepository, IProductRepository productRepository, IWarehouseRepository warehouseRepository, IUnitOfWork unitOfWork, IProductWarehouseRepository productWarehouseRepository, IPublisher publisher, IUserContext userContext, IAppLogger<RemoveFromStockCommandHandler> logger)
         {
             _transactionRepository = transactionRepository;
             _productRepository = productRepository;
             _warehouseRepository = warehouseRepository;
-            _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _productWarehouseRepository = productWarehouseRepository;
             _publisher = publisher;
             _userContext = userContext;
+            _logger = logger;
         }
 
         public async Task<Result> Handle(RemoveFromStockCommand request, CancellationToken cancellationToken)
@@ -56,6 +57,7 @@ namespace InventoryManagementSystem.Application.Features.Transactions.Commands
             if (productWarehouse.Product.LowStockThreshold >= productWarehouse.Quantity)
                 await _publisher.Publish(new LowStockEvent(productWarehouse.Product.Name, productWarehouse.Warehouse.Name));
 
+            _logger.LogInformation("User {UserId} removed {Quantity} units of product {ProductId} from warehouse {WarehouseId}", _userContext.GetLoggedUserEmail, request.Quantity, request.ProductId, request.WarehouseId);
             return Result.Success();
         }
     }
