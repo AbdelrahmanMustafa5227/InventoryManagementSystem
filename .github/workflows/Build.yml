@@ -32,11 +32,3 @@ jobs:
         
       - name: Running Tests
         run: dotnet test --configuration Release --no-build
-
-      - name: Publish
-        run: dotnet publish src/InventoryManagementSystem.Api/InventoryManagementSystem.Api.csproj --configuration Release -o artifacts
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: my-artifact
-          path: artifacts/
