@@ -56,3 +56,6 @@ Update the connection string in appsettings.json:
 }
 ```
 
+## Testing
+a Postman Collection was Provided as part of the project to test endpoints
+
