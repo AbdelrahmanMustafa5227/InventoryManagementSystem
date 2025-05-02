@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Directiory.Build.props = Directiory.Build.props
 		Directory.Packages.props = Directory.Packages.props
+		InventoryManagementSystem.postman_collection.json = InventoryManagementSystem.postman_collection.json
 		README.md = README.md
 		IMS_Postman_Collection.json = IMS_Postman_Collection.json
 	EndProjectSection

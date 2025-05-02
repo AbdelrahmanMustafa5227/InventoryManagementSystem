@@ -1,0 +1,535 @@
+{
+	"info": {
+		"_postman_id": "363bc5f5-82b8-4a19-83c5-61d2be8c9b8a",
+		"name": "InventoryManagementSystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39933936"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Add a Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Idempotency",
+								"value": "57f163be-8c81-4fcb-b9d8-f4f1593fadc5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\" : \"Rag\",\r\n    \"Description\" : \"Some Description\",\r\n    \"Price\" : 123.34,\r\n    \"LowStockThreshold\" : 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/products/add",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"products",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\" : 12,\r\n    \"Name\" : \"Suit Case\",\r\n    \"Description\" : \"Some Description\",\r\n    \"Price\" : 13.99,\r\n    \"LowStockThreshold\" : 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/products/update",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"products",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7061/products/delete?Id=15",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"products",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "Id",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Detailed Product By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7061/products/details?Id=2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"products",
+								"details"
+							],
+							"query": [
+								{
+									"key": "Id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7061/products/all?page=2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"products",
+								"all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Add to Stock",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwiZW1haWwiOiJhYmRlbHJhaG1hbi5tdXN0YWZhNTIyN0BnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDYxNjUyMzAsImV4cCI6MTc0NjE2NTgzMCwiaWF0IjoxNzQ2MTY1MjMwLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MDA3IiwiYXVkIjoiQW55b25lIn0.3U4V4-q_tJZlAps-igeIizEWSpKlZ7UFKa0IpQWAfeQ",
+								"type": "text"
+							},
+							{
+								"key": "X-Idempotency",
+								"value": "0f0046e4-f54f-40a5-a3d6-00abe196f7ac",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ProductId\" : 2,\r\n    \"WarehouseId\" : 1,\r\n    \"Quantity\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/transactions/addToStock",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"transactions",
+								"addToStock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove From Stock",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwiZW1haWwiOiJhYmRlbHJhaG1hbi5tdXN0YWZhNTIyN0BnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDYxNjU5MTcsImV4cCI6MTc0NjE2NjUxNywiaWF0IjoxNzQ2MTY1OTE3LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MDA3IiwiYXVkIjoiQW55b25lIn0.jzor0lwaLcMm1DPlVRKX3ARNwyqmyC96lxDT3dQ9xkA",
+								"type": "text"
+							},
+							{
+								"key": "X-Idempotency",
+								"value": "0f0046e4-f54f-40a5-a3d6-00abe196f7ac",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ProductId\" : 2,\r\n    \"WarehouseId\" : 1,\r\n    \"Quantity\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/transactions/removeFromStock",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"transactions",
+								"removeFromStock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwiZW1haWwiOiJhYmRlbHJhaG1hbi5tdXN0YWZhNTIyN0BnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDYxNjU5MTcsImV4cCI6MTc0NjE2NjUxNywiaWF0IjoxNzQ2MTY1OTE3LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MDA3IiwiYXVkIjoiQW55b25lIn0.jzor0lwaLcMm1DPlVRKX3ARNwyqmyC96lxDT3dQ9xkA",
+								"type": "text"
+							},
+							{
+								"key": "X-Idempotency",
+								"value": "0f0046e4-f54f-40a5-a3d6-00abe196f7ac",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ProductId\" : 2,\r\n    \"SourceWarehouseId\" : 1,\r\n    \"DestinationWarehouseId\" : 2,\r\n    \"Quantity\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/transactions/transfer",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"transactions",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Get All Transactions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwiZW1haWwiOiJhYmRlbHJhaG1hbi5tdXN0YWZhNTIyN0BnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDYxODgxNTUsImV4cCI6MTc0NjE4ODc1NSwiaWF0IjoxNzQ2MTg4MTU1LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MDA3IiwiYXVkIjoiQW55b25lIn0.KSQpbQ461rzVpZLk79ChIi21ElUx4ccznRJMPkSjEtM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/reports/transactionHistory?From=2022-12-01&To=2025-05-02&TransactionType=0&page=2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"reports",
+								"transactionHistory"
+							],
+							"query": [
+								{
+									"key": "From",
+									"value": "2022-12-01"
+								},
+								{
+									"key": "To",
+									"value": "2025-05-02"
+								},
+								{
+									"key": "TransactionType",
+									"value": "0"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products Low in stock Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwiZW1haWwiOiJhYmRlbHJhaG1hbi5tdXN0YWZhNTIyN0BnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDYxOTY3NzQsImV4cCI6MTc0NjE5NzM3NCwiaWF0IjoxNzQ2MTk2Nzc0LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MDA3IiwiYXVkIjoiQW55b25lIn0.HGwLeT8sOjHf5aojUXGhLA2LoHN8iTcc5AP1y2hbwYs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/reports/lowStock?page=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"reports",
+								"lowStock"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Idempotency",
+								"value": "0f0046e4-f54f-40a5-a3d6-00abe196f7a8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\" : \"Admin2\",\r\n    \"Password\" : \"Admin123$\",\r\n    \"Email\" : \"admin2@gmail.com\",\r\n    \"Role\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/auth/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\": \"abdelrahman.mustafa5227@gmail.com\",\r\n    \"Password\": \"Admin123$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/auth/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke Tokens",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNzQ2MDQ0NjcwLCJleHAiOjE3NDYwNDQ4NTAsImlhdCI6MTc0NjA0NDY3MCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAwNyIsImF1ZCI6IkFueW9uZSJ9.Vk8yCzJQzEQALMpq-pmQB9VszDfWiZ5hS6uc6TOzWQ8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/auth/revoke",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"auth",
+								"revoke"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7061/auth/refresh?guid=e0104a89-b6d4-41ee-95a7-2e7c302431ec",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"auth",
+								"refresh"
+							],
+							"query": [
+								{
+									"key": "guid",
+									"value": "e0104a89-b6d4-41ee-95a7-2e7c302431ec"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7061/auth/a",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"auth",
+								"a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Hangfire",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\" : \"Suit Case\",\r\n    \"Description\" : \"Some Description\",\r\n    \"Price\" : 13.55,\r\n    \"LowStockThreshold\" : 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7061/hangfire",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7061",
+					"path": [
+						"hangfire"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
