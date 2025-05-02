@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directiory.Build.props = Directiory.Build.props
 		Directory.Packages.props = Directory.Packages.props
 		README.md = README.md
+		IMS_Postman_Collection.json = IMS_Postman_Collection.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{05A19368-CB16-4E1B-A1A1-5A6B299F974B}"
